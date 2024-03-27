@@ -2,11 +2,13 @@
 const express = require('express');
 const connectDB = require('./Db/mongo');
 const { positalCode } = require('./Model/code');
+const cors = require('cors');
 
 // Create an instance of Express
 const app = express();
 connectDB();
 app.use(express.json());
+app.use(cors("*"));
 // Define a route
 app.get('/myanmarpositalcode', async (req, res) => {
     const posital = req.body;
