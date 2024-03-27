@@ -11,17 +11,19 @@ app.use(express.json());
 app.use(cors("*"));
 // Define a route
 app.get('/api/data', async (req, res) => {
-    const zipCode = req.query.zipCode;
+    const posital = req.body;
     try {
-        const response = await positalCode.findOne({ postal_code: zipCode });
+        const response = await positalCode.findOne({
+            postal_code: posital.zipCode
+        });
         if (response) {
-            res.status(200).send({ message: "Authentication Successful", data: response });
+            res.send({ message: "Authentication Successful", statusCode: 200, data: response })
         } else {
-            res.status(401).send({ message: "Authentication Failed" });
+            res.send({ message: "Authentication Failed", statusCode: 401 })
         }
     } catch (error) {
-        console.error("Error occurred during authentication", error);
-        res.status(500).send({ message: "Internal Server Error" });
+        console.error("Error occured when logging in", error);
+        throw error;
     }
 });
 app.get('/', async (req, res) => {
