@@ -10,7 +10,7 @@ connectDB();
 app.use(express.json());
 app.use(cors("*"));
 // Define a route
-app.get('/myanmarpositalcode', async (req, res) => {
+app.get('/api/data', async (req, res) => {
     const posital = req.body;
     try {
         const response = await positalCode.findOne({
@@ -26,6 +26,15 @@ app.get('/myanmarpositalcode', async (req, res) => {
         throw error;
     }
 });
+app.get('/', async (req, res) => {
+    try {
+        res.send({ message: "Authentication Successful", statusCode: 200 })
+    } catch (error) {
+        console.error("Error occured when logging in", error);
+        throw error;
+    }
+});
+
 
 // Start the server
 const PORT = process.env.PORT || 3000;
