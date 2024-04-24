@@ -54,7 +54,7 @@ app.get('/api/data/myanmar', async (req, res) => {
     }
 });
 
-app.get('/api/data/all', async (req, res) => {
+app.get('/api/data/getAll', async (req, res) => {
     try {
         const response = await positalCode.find();
         if (response) {
