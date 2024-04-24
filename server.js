@@ -2,6 +2,7 @@ const express = require('express');
 const connectDB = require('./Db/mongo');
 const { positalCode } = require('./Model/code');
 const cors = require('cors');
+const ExcelJS = require('exceljs');
 
 // Create an instance of Express
 const app = express();
@@ -33,6 +34,68 @@ app.get('/', async (req, res) => {
         throw error;
     }
 });
+
+//Kachin
+app.get('/api/data/myanmar', async (req, res) => {
+    const tsp_code = req.body.region;
+    try {
+        const response = await positalCode.find({
+            region_code: tsp_code
+        });
+        if (response) {
+            res.send({ message: "Authentication Successful", statusCode: 200, data: response });
+        } else {
+            res.send({ message: "Authentication Failed", statusCode: 401 });
+        }
+    } catch (error) {
+        console.error("Error occurred when retrieving data", error);
+        res.status(500).send({ message: "Internal Server Error" });
+    }
+});
+
+// const outputData = [];
+// const alldata = 17331;
+
+// app.get('/api/state', async (req, res) => {
+//     try {
+//         const response = await positalCode.find();
+//         if (response && response.length > 0) {
+//             const outputData = [];
+//             for (let i = 0; i < response.length; i++) {
+//                 outputData.push([
+//                     response[i].mm.region,
+//                     response[i].mm.town_township,
+//                     response[i].mm.qv_tract,
+//                     response[i].postal_code
+
+//                 ]);
+//             }
+//             const workbook = new ExcelJS.Workbook();
+//             const worksheet = workbook.addWorksheet('Sheet1');
+//             outputData.forEach(row => {
+//                 worksheet.addRow(row);
+//             });
+//             const filePath = 'output.xlsx';
+//             workbook.xlsx.writeFile(filePath)
+//                 .then(() => {
+//                     console.log('Excel file saved:', filePath);
+//                     res.send({ message: "Excel file saved", statusCode: 200 });
+//                 })
+//                 .catch(error => {
+//                     console.error('Error saving Excel file:', error);
+//                     res.status(500).send({ message: "Error saving Excel file" });
+//                 });
+//         } else {
+//             res.status(404).send({ message: "Data not found", statusCode: 404 });
+//         }
+//     } catch (error) {
+//         console.error("Error occurred when retrieving data", error);
+//         res.status(500).send({ message: "Internal Server Error" });
+//     }
+// });
+
+
+
 
 
 // Start the server

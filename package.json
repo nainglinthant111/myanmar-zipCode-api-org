@@ -2,6 +2,7 @@
   "dependencies": {
     "cors": "^2.8.5",
     "dotenv": "^16.4.5",
+    "exceljs": "^4.4.0",
     "express": "^4.19.2",
     "json-server": "^1.0.0-alpha.23",
     "mongoose": "^8.2.3"
@@ -12,7 +13,6 @@
   "name": "myanmarpositalcode",
   "version": "1.0.0",
   "main": "server.js",
-  "devDependencies": {},
   "author": "",
   "license": "ISC",
   "description": ""
