@@ -10,6 +10,15 @@ connectDB();
 app.use(express.json());
 app.use(cors("*"));
 // Define a route
+app.get('/', async (req, res) => {
+    try {
+        res.send({ message: "Authentication Successful", statusCode: 200 })
+    } catch (error) {
+        console.error("Error occured when logging in", error);
+        throw error;
+    }
+});
+
 app.get('/api/data', async (req, res) => {
     const zipCode = req.query.zipCode;
     try {
@@ -26,26 +35,14 @@ app.get('/api/data', async (req, res) => {
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
-app.get('/', async (req, res) => {
-    try {
-        res.send({ message: "Authentication Successful", statusCode: 200 })
-    } catch (error) {
-        console.error("Error occured when logging in", error);
-        throw error;
-    }
-});
-
 
 app.get('/api/data/myanmar', async (req, res) => {
     const region_code = req.body.region;
     try {
-        if (region_code == "00") {
-            response = await positalCode.find();
-        } else {
-            response = await positalCode.find({
-                region_code: region_code
-            });
-        }
+        const response = await positalCode.find({
+            region_code: region_code
+        });
+
         if (response) {
             res.send({ message: "Authentication Successful", statusCode: 200, data: response });
         } else {
@@ -56,6 +53,21 @@ app.get('/api/data/myanmar', async (req, res) => {
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
+
+app.get('/api/data/all', async (req, res) => {
+    try {
+        const response = await positalCode.find();
+        if (response) {
+            res.send({ message: "Authentication Successful", statusCode: 200, data: response });
+        } else {
+            res.send({ message: "Authentication Failed", statusCode: 401 });
+        }
+    } catch (error) {
+        console.error("Error occurred when retrieving data", error);
+        res.status(500).send({ message: "Internal Server Error" });
+    }
+});
+
 
 // const outputData = [];
 // const alldata = 17331;
