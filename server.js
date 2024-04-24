@@ -37,7 +37,7 @@ app.get('/api/data', async (req, res) => {
 });
 
 app.get('/api/data/myanmar', async (req, res) => {
-    const region_code = req.body.region;
+    const region_code = req.query.region;
     try {
         const response = await positalCode.find({
             region_code: region_code
