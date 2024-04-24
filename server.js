@@ -35,13 +35,17 @@ app.get('/', async (req, res) => {
     }
 });
 
-//Kachin
+
 app.get('/api/data/myanmar', async (req, res) => {
-    const tsp_code = req.body.region;
+    const region_code = req.body.region;
     try {
-        const response = await positalCode.find({
-            region_code: tsp_code
-        });
+        if (region_code == "00") {
+            response = await positalCode.find();
+        } else {
+            response = await positalCode.find({
+                region_code: region_code
+            });
+        }
         if (response) {
             res.send({ message: "Authentication Successful", statusCode: 200, data: response });
         } else {
