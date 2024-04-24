@@ -1,5 +1,16 @@
 {
-    "rewrites": [
-      { "source": "/(.*)", "destination": "/api" }
-    ]
-  }
+  "version": 2,
+  "limits": {
+    "lambda": "15s",
+    "fetch": {
+      "body": "100mb",
+      "total": "100mb"
+    }
+  },
+  "rewrites": [
+    {
+      "source": "/(.*)",
+      "destination": "/api"
+    }
+  ]
+}
