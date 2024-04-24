@@ -54,21 +54,6 @@ app.get('/api/data/myanmar', async (req, res) => {
     }
 });
 
-app.get('/api/data/getAll', async (req, res) => {
-    try {
-        const response = await positalCode.find();
-        if (response) {
-            res.send({ message: "Authentication Successful", statusCode: 200, data: response });
-        } else {
-            res.send({ message: "Authentication Failed", statusCode: 401 });
-        }
-    } catch (error) {
-        console.error("Error occurred when retrieving data", error);
-        res.status(500).send({ message: "Internal Server Error" });
-    }
-});
-
-
 // const outputData = [];
 // const alldata = 17331;
 
