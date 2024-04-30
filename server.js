@@ -54,7 +54,7 @@ app.get('/api/data/myanmar', async (req, res) => {
                 region_code: response.region_code,
                 postal_code: response.postal_code,
                 qv_code: response.qv_code
-            }
+            };
             res.send({ message: "Authentication Successful", statusCode: 200, data: data });
         } else {
             res.send({ message: "Authentication Failed", statusCode: 401 });
