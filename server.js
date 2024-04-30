@@ -43,18 +43,22 @@ app.get('/api/data/myanmar', async (req, res) => {
             region_code: region_code
         });
         if (response) {
-            const data = {
-                mm_region: response.mm.region,
-                mm_town_township: response.mm.town_township,
-                mm_qv_tract: response.mm.qv_tract,
-                en_region: response.mm.region,
-                en_town_township: response.mm.town_township,
-                en_qv_tract: response.mm.qv_tract,
-                tsp_code: response.tsp_code,
-                region_code: response.region_code,
-                postal_code: response.postal_code,
-                qv_code: response.qv_code
-            };
+            const data = []
+            data.splice(0, data.length);
+            for (let i = 0; i < response.length; i++) {
+                data.push({
+                    mm_region: response[i].mm.region,
+                    mm_town_township: response[i].mm.town_township,
+                    mm_qv_tract: response[i].mm.qv_tract,
+                    en_region: response[i].mm.region,
+                    en_town_township: response[i].mm.town_township,
+                    en_qv_tract: response[i].mm.qv_tract,
+                    tsp_code: response[i].tsp_code,
+                    region_code: response[i].region_code,
+                    postal_code: response[i].postal_code,
+                    qv_code: response[i].qv_code
+                });
+            }
             res.send({ message: "Authentication Successful", statusCode: 200, data: data });
         } else {
             res.send({ message: "Authentication Failed", statusCode: 401 });
@@ -69,6 +73,7 @@ app.get('/api/data/myanmar/regions', async (req, res) => {
     try {
         const response = await positalCode.find();
         const glbd = [];
+        glbd.splice(0, glbd.length);
         if (response) {
             for (let i = 0; i < response.length; i++) {
                 const xvalue = {
