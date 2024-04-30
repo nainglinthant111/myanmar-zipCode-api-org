@@ -42,9 +42,20 @@ app.get('/api/data/myanmar', async (req, res) => {
         const response = await positalCode.find({
             region_code: region_code
         });
-
         if (response) {
-            res.send({ message: "Authentication Successful", statusCode: 200, data: response });
+            const data = {
+                mm_region: response.mm.region,
+                mm_town_township: response.mm.town_township,
+                mm_qv_tract: response.mm.qv_tract,
+                en_region: response.mm.region,
+                en_town_township: response.mm.town_township,
+                en_qv_tract: response.mm.qv_tract,
+                tsp_code: response.tsp_code,
+                region_code: response.region_code,
+                postal_code: response.postal_code,
+                qv_code: response.qv_code
+            }
+            res.send({ message: "Authentication Successful", statusCode: 200, data: data });
         } else {
             res.send({ message: "Authentication Failed", statusCode: 401 });
         }
