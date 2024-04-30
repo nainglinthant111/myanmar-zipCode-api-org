@@ -60,10 +60,11 @@ app.get('/api/data/myanmar/regions', async (req, res) => {
         const glbd = [];
         if (response) {
             for (let i = 0; i < response.length; i++) {
-                const xvalue = [];
-                xvalue.push(response[i].region_code);
-                xvalue.push(response[i].en.region);
-                if (!glbd.some(item => item[0] === xvalue[0])) { // Checking only the region_code
+                const xvalue = {
+                    region_code: response[i].region_code,
+                    region: response[i].en.region
+                };
+                if (!glbd.some(item => item.region_code === xvalue.region_code)) {
                     glbd.push(xvalue);
                 }
             }
@@ -76,6 +77,7 @@ app.get('/api/data/myanmar/regions', async (req, res) => {
         res.status(500).send({ message: "Internal Server Error" });
     }
 });
+
 
 
 // const outputData = [];
